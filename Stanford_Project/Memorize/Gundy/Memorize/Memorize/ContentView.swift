@@ -28,7 +28,7 @@ struct ContentView: View {
     
     private var cards: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: minimumCardWidth()))]) {
                 ForEach(0..<emojis.count, id: \.self) { index in
                     CardView(content: emojis[index])
                         .aspectRatio(2 / 3, contentMode: .fit)
@@ -42,8 +42,10 @@ struct ContentView: View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: Theme.allCases.count)) {
             ForEach(Theme.allCases, id: \.self) { theme in
                 themeButton(theme.imageName, theme.name) {
-                    let newEmojis = theme.emojis.shuffled()
+                    var newEmojis = theme.emojis.shuffled()
+                    let randomCount = Int.random(in: 2...newEmojis.count)
                     
+                    newEmojis = Array(newEmojis[0..<randomCount])
                     emojis = newEmojis + newEmojis
                     themeColor = theme.color
                 }
@@ -63,6 +65,17 @@ struct ContentView: View {
                     .font(.caption)
             }
         }
+    }
+    
+    private func minimumCardWidth() -> CGFloat {
+        var count = 2
+        
+        while count * count < emojis.count,
+              count < 5 {
+            count += 1
+        }
+        
+        return CGFloat(280 / count)
     }
 }
 
