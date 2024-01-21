@@ -7,9 +7,17 @@
 
 import SwiftUI
 
-struct CardView: View {
+final class Card: ObservableObject {
     let content: String
-    @State private var isFaceUp = false
+    @Published var isFaceUp = false
+    
+    init(content: String) {
+        self.content = content
+    }
+}
+
+struct CardView: View {
+    @ObservedObject var card: Card
     
     var body: some View {
         ZStack {
@@ -19,22 +27,23 @@ struct CardView: View {
                     .foregroundStyle(.white)
                 base
                     .strokeBorder(lineWidth: 2)
-                Text(content)
+                Text(card.content)
                     .font(.largeTitle)
             }
-            .opacity(isFaceUp ? 1 : 0)
+            .opacity(card.isFaceUp ? 1 : 0)
             base
                 .fill()
-                .opacity(isFaceUp ? 0 : 1)
+                .opacity(card.isFaceUp ? 0 : 1)
         }
         .onTapGesture {
-            isFaceUp
+            card
+                .isFaceUp
                 .toggle()
         }
     }
 }
 
 #Preview {
-    CardView(content: Theme.animal.emojis[0])
+    CardView(card: Card(content: Theme.animal.emojis[0]))
         .padding()
 }
