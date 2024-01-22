@@ -31,10 +31,11 @@
 
 |Date|Contents|
 |--|--| 
-|24.01.01| - |
-|24.01.07| - |
+|24.01.07| SwiftUI 기초 WWDC 모아보기 |
 |24.01.14| [About](https://github.com/Dylan-yoon/0BuHet_SwiftUI/blob/main/Log/240114.md) |
+|24.01.21| [About](https://github.com/Dylan-yoon/0BuHet_SwiftUI/blob/main/Log/240121.md) |
 
+https://github.com/Dylan-yoon/0BuHet_SwiftUI/blob/main/Log/240121.md
 <br>
 <br>
 <br>
