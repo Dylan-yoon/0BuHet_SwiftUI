@@ -30,7 +30,7 @@ struct ContentView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: minimumCardWidth()))]) {
                 ForEach(0..<emojis.count, id: \.self) { index in
-                    CardView(card: Card(content: emojis[index]))
+                    CardView(content: emojis[index])
                         .aspectRatio(2 / 3, contentMode: .fit)
                 }
             }
@@ -42,10 +42,10 @@ struct ContentView: View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: Theme.allCases.count)) {
             ForEach(Theme.allCases, id: \.self) { theme in
                 themeButton(theme.imageName, theme.name) {
-                    var newEmojis = theme.emojis.shuffled()
+                    var newEmojis = theme.emojis
                     let randomCount = Int.random(in: 2...newEmojis.count)
                     
-                    newEmojis = Array(newEmojis[0..<randomCount])
+                    newEmojis = Array(theme.emojis[0..<randomCount])
                     emojis = (newEmojis + newEmojis).shuffled()
                     themeColor = theme.color
                 }
