@@ -12,15 +12,24 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
+            header
             ScrollView {
                 cards
                     .animation(.default, value: viewModel.cards)
             }
-            Button("Shuffle") {
-                viewModel.shuffle()
-            }
+            footer
         }
         .padding()
+    }
+    
+    private var header: some View {
+        HStack {
+            Text(viewModel.themeName)
+                .font(.largeTitle)
+            Spacer()
+            Text(viewModel.score)
+                .font(.title)
+        }
     }
     
     private var cards: some View {
@@ -37,8 +46,26 @@ struct EmojiMemoryGameView: View {
                         }
                 }
             }
-            .foregroundStyle(Color.orange)
+            .foregroundStyle(Color(
+                red: viewModel.themeColor.red,
+                green: viewModel.themeColor.green,
+                blue: viewModel.themeColor.blue
+            ))
         }
+    }
+    
+    var footer: some View {
+        HStack {
+            Button("NewGame") {
+                viewModel.playNewGame()
+            }
+            Spacer()
+            Button("Shuffle") {
+                viewModel.shuffle()
+            }
+        }
+        .font(.title3)
+        .padding([.leading, .trailing])
     }
 }
 
