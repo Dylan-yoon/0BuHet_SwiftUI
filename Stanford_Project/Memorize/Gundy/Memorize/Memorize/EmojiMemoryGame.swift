@@ -13,7 +13,7 @@ final class EmojiMemoryGame: ObservableObject {
         let emojis = theme.emojis.shuffled()
         
         return (
-            MemoryGame(numberOfPairsOfCards: Int.random(in: 2...emojis.count)) { pairIndex in
+            MemoryGame(numberOfPairsOfCards: Int.random(in: min(2, emojis.count)...emojis.count)) { pairIndex in
                 emojis[pairIndex]
             }, theme
         )
@@ -38,8 +38,8 @@ final class EmojiMemoryGame: ObservableObject {
         model.cards
     }
     
-    var themeColor: (red: Double, green: Double, blue: Double) {
-        currentTheme.color
+    var colors: [Color] {
+        currentTheme.colors.map { Color(red: $0, green: $1, blue: $2) }
     }
     
     // MARK: - Intents

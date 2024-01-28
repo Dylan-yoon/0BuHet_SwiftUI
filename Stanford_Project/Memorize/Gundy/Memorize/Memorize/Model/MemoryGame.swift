@@ -11,6 +11,7 @@ struct MemoryGame<CardContent: Equatable> {
     private(set) var score: Int = 0
     private(set) var cards: [Card]
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
+    private var pickedTime: Date?
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = []
@@ -34,26 +35,28 @@ struct MemoryGame<CardContent: Equatable> {
             if cards[potentialMatchIndex].content == cards[index].content {
                 cards[potentialMatchIndex].isMatched = true
                 cards[index].isMatched = true
-                score += 2
+                score += 200 + max(-100, 20 * Int(pickedTime?.timeIntervalSinceNow ?? 0))
             } else {
                 if cards[potentialMatchIndex].isBeenSeen {
-                    score -= 1
+                    score -= 100
                 }
                 
                 if cards[index].isBeenSeen {
-                    score -= 1
+                    score -= 100
                 }
             }
             
             indexOfTheOneAndOnlyFaceUpCard = nil
             cards[potentialMatchIndex].isBeenSeen = true
             cards[index].isBeenSeen = true
+            pickedTime = nil
         } else {
             for index in cards.indices {
                 cards[index].isFaceUp = false
             }
             
             indexOfTheOneAndOnlyFaceUpCard = index
+            pickedTime = .now
         }
         
         cards[index].isFaceUp = true

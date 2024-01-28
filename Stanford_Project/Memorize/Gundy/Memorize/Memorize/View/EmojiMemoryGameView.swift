@@ -28,8 +28,8 @@ struct EmojiMemoryGameView: View {
                 .font(.largeTitle)
             Spacer()
             Text(viewModel.score)
-                .font(.title)
         }
+        .font(.title)
     }
     
     private var cards: some View {
@@ -46,11 +46,7 @@ struct EmojiMemoryGameView: View {
                         }
                 }
             }
-            .foregroundStyle(Color(
-                red: viewModel.themeColor.red,
-                green: viewModel.themeColor.green,
-                blue: viewModel.themeColor.blue
-            ))
+            .foregroundStyle(Gradient(colors: viewModel.colors))
         }
     }
     
